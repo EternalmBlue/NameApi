@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "1.9.22"
+    id("maven-publish")
 }
 
 group = "fun.eternalblue"
@@ -13,11 +14,19 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
     compileOnly("org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT")
+    implementation(kotlin("stdlib"))
 }
 
 tasks.test {
     useJUnitPlatform()
 }
-kotlin {
+kotlin{
     jvmToolchain(17)
+}
+publishing{
+    publications{
+        register("mavenJava", MavenPublication::class) {
+            from(components["java"])
+        }
+    }
 }
